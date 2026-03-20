@@ -131,33 +131,34 @@ Scoring the full PGS Catalog per patient enables a new form of genomic profiling
 | Disease | n | Module AUC | 95% CI | Best Published PGS | Margin | PGS Beaten |
 |---------|---|-----------|--------|-------------------|--------|------------|
 | Longevity | 150 | **1.000** | [1.000, 1.000] | 0.534 | +0.466 | 2/2 |
-| Atopic Dermatitis | 62 | **0.992** | [0.980, 0.997] | 0.591 | +0.400 | 16/16 |
-| Asthma | 41 | **0.968** | [0.943, 0.984] | 0.638 | +0.330 | 78/78 |
-| Type 2 Diabetes | 34 | **0.933** | [0.891, 0.959] | 0.689 | +0.245 | 183/183 |
-| Coronary Artery Disease | 121 | **0.953** | [0.927, 0.970] | 0.867 | +0.086 | 125/125 |
-| Breast Cancer | 60 | **0.935** | [0.894, 0.967] | 0.739 | +0.196 | 163/163 |
-| Celiac Disease | 35 | **0.987** | [0.925, 1.000] | 0.812 | +0.175 | 11/11 |
-| Bipolar Disorder | 34 | **0.900** | [0.822, 0.954] | 0.721 | +0.178 | 3/3 |
 | Parkinson's Disease | 114 | **1.000** | [1.000, 1.000] | 0.910 | +0.090 | 11/11 |
-| Colorectal Cancer | 48 | **0.977** | [0.949, 0.992] | 0.939 | +0.038 | 74/74 |
-| Ankylosing Spondylitis | 34 | 0.673 | [0.569, 0.753] | 0.732 | -0.059 | 8/10 |
+| Atopic Dermatitis | 62 | **0.991** | [0.980, 0.998] | 0.591 | +0.400 | 16/16 |
+| Celiac Disease | 35 | **0.990** | [0.940, 1.000] | 0.812 | +0.178 | 11/11 |
+| Asthma | 41 | **0.977** | [0.956, 0.990] | 0.637 | +0.339 | 78/78 |
+| Coronary Artery Disease | 121 | **0.956** | [0.930, 0.974] | 0.867 | +0.089 | 125/125 |
+| Colorectal Cancer | 48 | **0.952** | [0.888, 0.988] | 0.939 | +0.013 | 74/74 |
+| Breast Cancer | 60 | **0.940** | [0.906, 0.968] | 0.739 | +0.201 | 163/163 |
+| Bipolar Disorder | 34 | **0.913** | [0.855, 0.951] | 0.721 | +0.192 | 3/3 |
+| Type 2 Diabetes | 34 | **0.907** | [0.858, 0.941] | 0.689 | +0.219 | 183/183 |
+| Ankylosing Spondylitis | 34 | **0.744** | [0.640, 0.803] | 0.732 | +0.012 | 10/10 |
 
-**Total: 674/676 (99.7%) disease-specific PGS beaten across 11 diseases.**
+**Total: 676/676 (100%) disease-specific PGS beaten across all 11 diseases.**
 
-**Multi-class disease ranking (genome only, no clinical data):**
+**Multi-class disease ranking:**
 
 | Metric | Result |
 |--------|--------|
-| Top-1 accuracy | 52.3% (chance = 9.1%) |
-| Top-3 accuracy | 82.5% |
-| Permutation significance | 19.1 sigma (p < 0.01, 100 shuffles) |
-| Null mean | 18.4% |
+| Top-1 accuracy | 52.4% (chance = 9.1%) |
+| Top-3 accuracy | 82.1% |
+| Permutation significance | 21.9 sigma (p < 0.01, 100 shuffles) |
+| Null mean | 19.0% |
 
 **Robustness checks:**
-- Clean comparator (no proxy/technical PGS): 635/637 (99.7%) beaten
-- Stress test vs ALL 5,232 PGS (not just disease-matched): module wins 6/11 diseases
+- Clean comparator (no proxy/technical PGS): 637/637 (100%) beaten
+- Stress test vs ALL 5,232 PGS (not just disease-matched): module wins 5/11 diseases
 - Atlas sensitivity: stable across K=10 (157 modules), K=15 (194 modules), K=20 (141 modules)
-- Median AUC margin vs best published PGS: +0.358
+- Median AUC margin vs best published PGS: +0.347
+- Genome-only sensitivity (no demographics): 27.8% top-1, 67.7% top-3 (10/11 diseases still beat best PGS)
 
 ### Reproducing the Analysis
 
