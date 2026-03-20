@@ -1,0 +1,152 @@
+[23:02:44] ======================================================================
+[23:02:44] POLYGEN — FULL END-TO-END REPRODUCTION + ROBUSTNESS
+[23:02:44] ======================================================================
+[23:02:44] 
+[REBUILD] Running pgs_quality.py → quality_scores.tsv
+Loaded 5251 PGS, 5278 with performance data
+
+Scored 5251 PGS (patient: EUR):
+  Total score: mean=53.5, median=53.0, range=[24,83]
+  Labels: {'confident': 1589, 'discard': 59, 'likely': 3134, 'uncertain': 469}
+  Performance source: {'estimated': 18, 'measured': 4423, 'partial': 810}
+Saved to /home/vigil/Research/PolyGen/polygen_clean/final_analysis/quality_scores.tsv
+[23:02:44]   Generated quality_scores.tsv
+[23:02:44] 
+[REBUILD] Building ref_matrix from cached per-PGS reference scores
+[23:02:44]   Loading 5221 cached .npy files...
+[23:02:46]   Rebuilt: 3330 samples × 5221 PGS (PC1-10 residualized)
+[23:02:46] 
+[0/11] Aggregating raw job outputs into wide matrix
+[23:02:46]   Found 958 job folders, 952 in manifest
+[23:02:53]   Read 4975632 score rows from 951 patients (skipped 7)
+[23:02:58]   Wide matrix: 934 patients × 5232 PGS
+[23:02:58]   Ancestry: 934 patients × 23 columns
+[23:02:58]   Saved: patient_pgs_z_wide.parquet, patient_ancestry.tsv
+[23:02:58] 
+[1/11] Rebuilding module atlas from reference panel
+[23:02:58]   Reference panel: 3330 samples × 5221 PGS (REBUILT from cache)
+[23:02:59]   Winsorized + standardized
+[23:02:59]   Correlation matrix: (5221, 5221)
+[23:02:59]   Edges: 19948
+[23:02:59]   Louvain communities: 584
+[23:03:22]   Bootstrap stability done (25 iterations)
+[23:03:22]   Retained modules: 194
+[23:03:22]   PGS covered: 4646
+[23:03:22] 
+[2/7] Scoring patients with rebuilt atlas
+[23:03:22]   (exact same pipeline as bundle_runtime.py:compute_submodule_scores)
+[23:03:22]   Quality scores: 5251 PGS (max=83.0)
+[23:03:22]   Ref PCs: (3330, 10), Patient PCs: (934, 10)
+[23:03:23]   Patient scores: 934 × 194 → 194 clean modules
+[23:03:23] 
+[3/7] Building feature matrices
+[23:03:23]   Full: (934, 396), Genome: (934, 388)
+[23:03:23] 
+[4/7] Per-disease evaluation
+[23:03:23]   PGS sets: ALL family-matched=1838, CLEAN (no proxy/tech)=1763, ALL catalog=5232
+[23:03:23] 
+Disease                      n  #All  #Cln  BstAll  BstCln ModFull  BeatAll  BeatCln
+[23:03:23] -----------------------------------------------------------------------------------------------
+[23:03:32] Ankylosing_Spondylitis      34    10    10  0.7318  0.7318  0.6730 8/10 8/10
+[23:03:42] Asthma                      41    78    78  0.6375  0.6375  0.9678 78/78 78/78
+[23:03:52] Atopic_Dermatitis           62    16    16  0.5912  0.5912  0.9915 16/16 16/16
+[23:04:02] Bipolar                     34     3     3  0.7211  0.7211  0.8995 3/3 3/3
+[23:04:12] Breast_Cancer               60   163   163  0.7391  0.7391  0.9349 163/163 163/163
+[23:04:22] Celiac                      35    11    11  0.8117  0.8117  0.9868 11/11 11/11
+[23:04:32] Colorectal_Cancer           48    74    74  0.9394  0.9394  0.9770 74/74 74/74
+[23:04:43] Coronary_Artery            121   125    99  0.8673  0.7430  0.9534 125/125 99/99
+[23:04:53] Longevity                  150     2     2  0.5337  0.5337  1.0000 2/2 2/2
+[23:05:03] Parkinsons                 114    11    11  0.9104  0.9104  1.0000 11/11 11/11
+[23:05:13] Type2_Diabetes              34   183   170  0.6886  0.6886  0.9331 183/183 170/170
+[23:05:13] 
+  ALL family-matched: 674/676 (99.7%)
+[23:05:13]   CLEAN (no proxy/tech): 635/637 (99.7%)
+[23:05:13] 
+[5/7] Multi-class ranking
+[23:05:14]   Top-1: 383/733 = 52.3%, Top-3: 605/733 = 82.5%
+[23:05:14] 
+[6/9] Permutation test (100 shuffles)
+[23:07:53]   Shuffle 10/100: 150/733 = 0.205  (running null mean=0.184)
+[23:10:32]   Shuffle 20/100: 128/733 = 0.175  (running null mean=0.184)
+[23:13:06]   Shuffle 30/100: 135/733 = 0.184  (running null mean=0.184)
+[23:15:41]   Shuffle 40/100: 126/733 = 0.172  (running null mean=0.184)
+[23:18:15]   Shuffle 50/100: 133/733 = 0.181  (running null mean=0.185)
+[23:20:50]   Shuffle 60/100: 150/733 = 0.205  (running null mean=0.186)
+[23:23:26]   Shuffle 70/100: 131/733 = 0.179  (running null mean=0.185)
+[23:26:01]   Shuffle 80/100: 125/733 = 0.171  (running null mean=0.185)
+[23:28:35]   Shuffle 90/100: 137/733 = 0.187  (running null mean=0.185)
+[23:31:09]   Shuffle 100/100: 116/733 = 0.158  (running null mean=0.184)
+[23:31:09]   Null distribution: mean=0.1839, std=0.0177, range=[0.146, 0.225]
+[23:31:09]   Real: 0.5225, Sigma: 19.1, p < 0.0100
+[23:31:09] 
+[7/9] Bootstrap 95% CIs for per-disease AUC (1000 resamples)
+[23:31:10]   Ankylosing_Spondylitis    AUC=0.6730 [0.5690, 0.7531]
+[23:31:10]   Asthma                    AUC=0.9678 [0.9432, 0.9840]
+[23:31:10]   Atopic_Dermatitis         AUC=0.9915 [0.9799, 0.9969]
+[23:31:11]   Bipolar                   AUC=0.8995 [0.8218, 0.9544]
+[23:31:11]   Breast_Cancer             AUC=0.9349 [0.8944, 0.9670]
+[23:31:11]   Celiac                    AUC=0.9868 [0.9247, 1.0000]
+[23:31:11]   Colorectal_Cancer         AUC=0.9770 [0.9491, 0.9919]
+[23:31:12]   Coronary_Artery           AUC=0.9534 [0.9273, 0.9699]
+[23:31:12]   Longevity                 AUC=1.0000 [1.0000, 1.0000]
+[23:31:12]   Parkinsons                AUC=1.0000 [1.0000, 1.0000]
+[23:31:13]   Type2_Diabetes            AUC=0.9331 [0.8911, 0.9592]
+[23:31:13] 
+[8/11] STRESS TEST: modules vs ALL 5,232 PGS per disease
+[23:31:14]   Ankylosing_Spondylitis    beat 5164/5230 (98.7%)  best_any=0.9106 (PGS005253)  module=0.6730  LOSS
+[23:31:16]   Asthma                    beat 5230/5230 (100.0%)  best_any=0.9075 (PGS005253)  module=0.9678  WIN
+[23:31:17]   Atopic_Dermatitis         beat 5231/5231 (100.0%)  best_any=0.8806 (PGS005253)  module=0.9915  WIN
+[23:31:19]   Bipolar                   beat 5222/5231 (99.8%)  best_any=0.9867 (PGS005253)  module=0.8995  LOSS
+[23:31:20]   Breast_Cancer             beat 5231/5231 (100.0%)  best_any=0.8795 (PGS005253)  module=0.9349  WIN
+[23:31:22]   Celiac                    beat 5208/5231 (99.6%)  best_any=0.9987 (PGS005227)  module=0.9868  LOSS
+[23:31:23]   Colorectal_Cancer         beat 5231/5231 (100.0%)  best_any=0.9756 (PGS005253)  module=0.9770  WIN
+[23:31:25]   Coronary_Artery           beat 5231/5231 (100.0%)  best_any=0.9293 (PGS005253)  module=0.9534  WIN
+[23:31:26]   Longevity                 beat 5198/5231 (99.4%)  best_any=1.0000 (PGS004026)  module=1.0000  LOSS
+[23:31:28]   Parkinsons                beat 5198/5231 (99.4%)  best_any=1.0000 (PGS004026)  module=1.0000  LOSS
+[23:31:29]   Type2_Diabetes            beat 5230/5230 (100.0%)  best_any=0.8771 (PGS005253)  module=0.9331  WIN
+[23:31:29] 
+  Module beats BEST of ALL 5,232 PGS: 6/11 diseases
+[23:31:29] 
+[9/11] Per-PGS margin analysis (CLEAN comparator)
+[23:31:30]   ALL family-matched: 674/676 beaten, median margin +0.3582
+[23:31:30]   CLEAN (no proxy/tech): 635/637 beaten, median margin +0.3599
+[23:31:30] 
+  Disease                    ModAUC                CI  BstAll  MgnAll  BstCln  MgnCln
+[23:31:30]   ------------------------------------------------------------------------------------------
+[23:31:30]   Ankylosing_Spondylitis     0.6730     [0.569,0.753]  0.7318 -0.0588  0.7318 -0.0588
+[23:31:30]   Asthma                     0.9678     [0.943,0.984]  0.6375 +0.3303  0.6375 +0.3303
+[23:31:30]   Atopic_Dermatitis          0.9915     [0.980,0.997]  0.5912 +0.4003  0.5912 +0.4003
+[23:31:30]   Bipolar                    0.8995     [0.822,0.954]  0.7211 +0.1784  0.7211 +0.1784
+[23:31:30]   Breast_Cancer              0.9349     [0.894,0.967]  0.7391 +0.1958  0.7391 +0.1958
+[23:31:30]   Celiac                     0.9868     [0.925,1.000]  0.8117 +0.1751  0.8117 +0.1751
+[23:31:30]   Colorectal_Cancer          0.9770     [0.949,0.992]  0.9394 +0.0376  0.9394 +0.0376
+[23:31:30]   Coronary_Artery            0.9534     [0.927,0.970]  0.8673 +0.0861  0.7430 +0.2104
+[23:31:30]   Longevity                  1.0000     [1.000,1.000]  0.5337 +0.4663  0.5337 +0.4663
+[23:31:30]   Parkinsons                 1.0000     [1.000,1.000]  0.9104 +0.0896  0.9104 +0.0896
+[23:31:30]   Type2_Diabetes             0.9331     [0.891,0.959]  0.6886 +0.2445  0.6886 +0.2445
+[23:31:30] 
+[10/11] Atlas sensitivity analysis
+[23:31:53]   K=10: 826 communities, 157 retained (vs K=15: 584 communities, 194 retained)
+[23:32:16]   K=20: 474 communities, 141 retained (vs K=15: 584 communities, 194 retained)
+[23:32:16] 
+[11/11] Saving everything
+[23:32:16]   models.pkl
+[23:32:16]   results.json
+[23:32:16]   per_fold_aucs.json
+[23:32:16]   feature_importances.json
+[23:32:16]   patient_predictions.csv (934 patients)
+[23:32:16]   patient_module_scores.csv (934 × 388 features)
+[23:32:16]   confusion_matrix.json
+[23:32:16]   atlas_modules.json (194 modules)
+[23:32:16]   permutation_null.json (100 shuffles)
+[23:32:16] 
+======================================================================
+[23:32:16] ROBUSTNESS SUMMARY
+[23:32:16] ======================================================================
+[23:32:16]   Atlas (N_BOOT=25): 194 retained → 194 clean
+[23:32:16]   ALL family-matched PGS beaten: 674/676 (99.7%)
+[23:32:16]   CLEAN PGS beaten (no proxy/tech): 635/637 (99.7%)
+[23:32:16]   Stress test (vs ALL 5,232): module wins 6/11 diseases
+[23:32:16]   Multi-class: top-1=52.3%, top-3=82.5%
+[23:32:16]   Permutation (100 shuffles): 19.1σ
+[23:32:16] DONE

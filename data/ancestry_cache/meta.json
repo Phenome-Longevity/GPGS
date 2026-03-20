@@ -1,0 +1,24 @@
+{
+  "build": "GRCh38",
+  "method": "FRAPOSA OADP",
+  "n_pca_variants": 37997,
+  "n_reference_samples": 3330,
+  "n_unrelated": 3330,
+  "n_pcs": 40,
+  "dim_online": 40,
+  "ld_params": {
+    "window": 1000,
+    "step": 50,
+    "r2": 0.05
+  },
+  "maf_min": 0.05,
+  "populations": [
+    "AFR",
+    "AMR",
+    "CSA",
+    "EAS",
+    "EUR",
+    "MID"
+  ],
+  "source": "pgsc_calc FRAPOSA compatible"
+}

@@ -1,0 +1,19 @@
+# Data (created at runtime)
+data/ancestry_cache/ref_store/
+data/ancestry_cache/ref_scores/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Logs
+#*.log
+
+# OS
+.DS_Store
+
+# Analysis bundle runtime outputs
+analysis/jobs/*
+!analysis/jobs/README.md

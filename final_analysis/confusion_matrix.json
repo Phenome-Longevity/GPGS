@@ -1,0 +1,246 @@
+{
+  "Ankylosing_Spondylitis": {
+    "tp": 0,
+    "fp": 0,
+    "tn": 201,
+    "fn": 34,
+    "sensitivity": 0.0,
+    "specificity": 1.0,
+    "ppv": 0
+  },
+  "Asthma": {
+    "tp": 0,
+    "fp": 0,
+    "tn": 201,
+    "fn": 41,
+    "sensitivity": 0.0,
+    "specificity": 1.0,
+    "ppv": 0
+  },
+  "Atopic_Dermatitis": {
+    "tp": 4,
+    "fp": 0,
+    "tn": 201,
+    "fn": 58,
+    "sensitivity": 0.0645,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Bipolar": {
+    "tp": 23,
+    "fp": 0,
+    "tn": 201,
+    "fn": 11,
+    "sensitivity": 0.6765,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Breast_Cancer": {
+    "tp": 3,
+    "fp": 0,
+    "tn": 201,
+    "fn": 57,
+    "sensitivity": 0.05,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Celiac": {
+    "tp": 34,
+    "fp": 0,
+    "tn": 201,
+    "fn": 1,
+    "sensitivity": 0.9714,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Colorectal_Cancer": {
+    "tp": 40,
+    "fp": 0,
+    "tn": 201,
+    "fn": 8,
+    "sensitivity": 0.8333,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Coronary_Artery": {
+    "tp": 68,
+    "fp": 0,
+    "tn": 201,
+    "fn": 53,
+    "sensitivity": 0.562,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Longevity": {
+    "tp": 150,
+    "fp": 0,
+    "tn": 201,
+    "fn": 0,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Parkinsons": {
+    "tp": 114,
+    "fp": 0,
+    "tn": 201,
+    "fn": 0,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "ppv": 1.0
+  },
+  "Type2_Diabetes": {
+    "tp": 0,
+    "fp": 0,
+    "tn": 201,
+    "fn": 34,
+    "sensitivity": 0.0,
+    "specificity": 1.0,
+    "ppv": 0
+  },
+  "multiclass_matrix": {
+    "Ankylosing_Spondylitis": {
+      "Ankylosing_Spondylitis": 1,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 3,
+      "Bipolar": 0,
+      "Breast_Cancer": 6,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 24,
+      "Longevity": 0,
+      "Parkinsons": 0,
+      "Type2_Diabetes": 0
+    },
+    "Asthma": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 9,
+      "Atopic_Dermatitis": 25,
+      "Bipolar": 0,
+      "Breast_Cancer": 2,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 5,
+      "Longevity": 0,
+      "Parkinsons": 0,
+      "Type2_Diabetes": 0
+    },
+    "Atopic_Dermatitis": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 2,
+      "Atopic_Dermatitis": 56,
+      "Bipolar": 0,
+      "Breast_Cancer": 0,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 2,
+      "Longevity": 0,
+      "Parkinsons": 2,
+      "Type2_Diabetes": 0
+    },
+    "Bipolar": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 7,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 4,
+      "Longevity": 0,
+      "Parkinsons": 23,
+      "Type2_Diabetes": 0
+    },
+    "Breast_Cancer": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 35,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 17,
+      "Longevity": 0,
+      "Parkinsons": 8,
+      "Type2_Diabetes": 0
+    },
+    "Celiac": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 0,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 2,
+      "Longevity": 0,
+      "Parkinsons": 33,
+      "Type2_Diabetes": 0
+    },
+    "Colorectal_Cancer": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 3,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 6,
+      "Longevity": 1,
+      "Parkinsons": 38,
+      "Type2_Diabetes": 0
+    },
+    "Coronary_Artery": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 5,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 55,
+      "Longevity": 0,
+      "Parkinsons": 57,
+      "Type2_Diabetes": 4
+    },
+    "Longevity": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 0,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 0,
+      "Longevity": 120,
+      "Parkinsons": 30,
+      "Type2_Diabetes": 0
+    },
+    "Parkinsons": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 0,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 5,
+      "Longevity": 2,
+      "Parkinsons": 107,
+      "Type2_Diabetes": 0
+    },
+    "Type2_Diabetes": {
+      "Ankylosing_Spondylitis": 0,
+      "Asthma": 0,
+      "Atopic_Dermatitis": 0,
+      "Bipolar": 0,
+      "Breast_Cancer": 15,
+      "Celiac": 0,
+      "Colorectal_Cancer": 0,
+      "Coronary_Artery": 19,
+      "Longevity": 0,
+      "Parkinsons": 0,
+      "Type2_Diabetes": 0
+    }
+  }
+}
