@@ -168,7 +168,7 @@ scores_df = pl.DataFrame({
     'pgs_id': [s[1] for s in all_scores],
     'z': [s[2] for s in all_scores],
 }).group_by(['barcode', 'pgs_id']).last()
-pgs_wide = scores_df.pivot(on='pgs_id', index='barcode', values='z')
+pgs_wide = scores_df.pivot(on='pgs_id', index='barcode', values='z').sort('barcode')
 
 # Add metadata columns from manifest
 meta_cols = {'barcode': [], 'job_id': [], 'sample_id': [], 'label': [], 'disease': [], 'source': [], 'sex': [], 'age': []}
@@ -565,8 +565,9 @@ cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 results = {}
 models_final = {}
 cv_probs = {d: np.zeros(N) for d in DISEASES}
-per_fold_aucs = {}       # disease -> [fold1_auc, fold2_auc, ...]
-feature_importances = {} # disease -> array of importances
+cv_probs_genome = {d: np.zeros(N) for d in DISEASES}  # genome-only sensitivity
+per_fold_aucs = {}
+feature_importances = {}
 
 log(f'\n{"Disease":25s} {"n":>4s} {"#All":>5s} {"#Cln":>5s} {"BstAll":>7s} {"BstCln":>7s} {"ModFull":>7s} {"BeatAll":>8s} {"BeatCln":>8s}')
 log('-' * 95)
@@ -593,6 +594,16 @@ for disease in DISEASES:
         for i in range(N):
             if not mask[i] and cv_probs[disease][i] == 0: cv_probs[disease][i] = all_p[i]
         fold_importances.append(rf.feature_importances_)
+
+    # Genome-only CV probabilities (sensitivity analysis)
+    for train_idx, test_idx in cv.split(X_genome[mask], y):
+        rf_g = RandomForestClassifier(500, max_depth=12, class_weight='balanced', random_state=42, n_jobs=-1)
+        rf_g.fit(X_genome[mask][train_idx], y[train_idx])
+        probs_g = rf_g.predict_proba(X_genome[mask][test_idx])[:, 1]
+        for i, ti in enumerate(test_idx): cv_probs_genome[disease][mask_idx[ti]] = probs_g[i]
+        all_pg = rf_g.predict_proba(X_genome)[:, 1]
+        for i in range(N):
+            if not mask[i] and cv_probs_genome[disease][i] == 0: cv_probs_genome[disease][i] = all_pg[i]
 
     rf_final = RandomForestClassifier(500, max_depth=12, class_weight='balanced', random_state=42, n_jobs=-1)
     rf_final.fit(X_full[mask], y)
@@ -647,7 +658,16 @@ for bi in range(N):
     probs = {d: cv_probs[d][bi] for d in DISEASES}
     ranked = sorted(probs, key=probs.get, reverse=True)
     c1 += int(ranked[0] == LABELS[bi]); c3 += int(LABELS[bi] in ranked[:3]); td += 1
-log(f'  Top-1: {c1}/{td} = {c1/td:.1%}, Top-3: {c3}/{td} = {c3/td:.1%}')
+log(f'  Full model:    Top-1: {c1}/{td} = {c1/td:.1%}, Top-3: {c3}/{td} = {c3/td:.1%}')
+
+# Genome-only multi-class
+g1 = g3 = gd = 0
+for bi in range(N):
+    if LABELS[bi] == 'Healthy': continue
+    probs_g = {d: cv_probs_genome[d][bi] for d in DISEASES}
+    ranked_g = sorted(probs_g, key=probs_g.get, reverse=True)
+    g1 += int(ranked_g[0] == LABELS[bi]); g3 += int(LABELS[bi] in ranked_g[:3]); gd += 1
+log(f'  Genome only:   Top-1: {g1}/{gd} = {g1/gd:.1%}, Top-3: {g3}/{gd} = {g3/gd:.1%}')
 
 # ═══════════════════════════════════════
 # STEP 6: PERMUTATION
@@ -830,6 +850,7 @@ log(f'  models.pkl')
 
 # --- 2. results.json (high-level summary) ---
 results['multiclass'] = {'top1': round(c1/td,4), 'top3': round(c3/td,4)}
+results['multiclass_genome'] = {'top1': round(g1/gd,4), 'top3': round(g3/gd,4)}
 results['permutation'] = {'n_perm': N_PERM, 'sigma': round(sigma,1), 'p_value': round(max(p_value, 1/N_PERM),4),
                           'real': round(real_acc,4), 'null_mean': round(perm_mean,4), 'null_std': round(perm_std,4),
                           'all_null_accs': [round(a,4) for a in perm_accs]}
@@ -879,9 +900,18 @@ for bi in range(N):
     row['predicted_rank3'] = ranked[2]
     row['correct_rank1'] = int(ranked[0] == LABELS[bi]) if LABELS[bi] != 'Healthy' else ''
     row['correct_top3'] = int(LABELS[bi] in ranked[:3]) if LABELS[bi] != 'Healthy' else ''
+    # Genome-only probabilities
+    probs_g = {d: cv_probs_genome[d][bi] for d in DISEASES}
+    ranked_g = sorted(probs_g, key=probs_g.get, reverse=True)
+    for d in DISEASES:
+        row[f'genome_prob_{d}'] = round(probs_g[d], 4)
+    row['genome_rank1'] = ranked_g[0]
+    row['genome_correct_rank1'] = int(ranked_g[0] == LABELS[bi]) if LABELS[bi] != 'Healthy' else ''
+    row['genome_correct_top3'] = int(LABELS[bi] in ranked_g[:3]) if LABELS[bi] != 'Healthy' else ''
     pred_rows.append(row)
 pred_fields = ['barcode','true_label'] + [f'prob_{d}' for d in DISEASES] + \
-              ['predicted_rank1','predicted_rank2','predicted_rank3','correct_rank1','correct_top3']
+              ['predicted_rank1','predicted_rank2','predicted_rank3','correct_rank1','correct_top3'] + \
+              [f'genome_prob_{d}' for d in DISEASES] + ['genome_rank1','genome_correct_rank1','genome_correct_top3']
 with open(OUT / 'patient_predictions.csv', 'w', newline='') as f:
     w = csv.DictWriter(f, fieldnames=pred_fields); w.writeheader(); w.writerows(pred_rows)
 log(f'  patient_predictions.csv ({len(pred_rows)} patients)')
